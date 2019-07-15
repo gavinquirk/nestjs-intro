@@ -28,8 +28,14 @@ export class ProductsController {
   }
 
   @Get()
-  getAllProducts() {
-    return this.productsService.getProducts();
+  async getAllProducts() {
+    const products = await this.productsService.getProducts();
+    return products.map(prod => ({
+      id: prod.id,
+      title: prod.title,
+      description: prod.description,
+      price: prod.price,
+    }));
   }
 
   @Get(':id')
