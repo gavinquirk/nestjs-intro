@@ -29,29 +29,33 @@ export class ProductsService {
 
   async getSingleProduct(productId: string) {
     const product = await this.findProduct(productId);
-    return product;
+    return {
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      price: product.price,
+    };
   }
 
-  // updateProduct(
-  //   productId: string,
-  //   title: string,
-  //   description: string,
-  //   price: number,
-  // ) {
-  //   const [product, index] = this.findProduct(productId);
-  //   const updatedProduct = { ...product };
-  //   if (title) {
-  //     updatedProduct.title = title;
-  //   }
-  //   if (description) {
-  //     updatedProduct.description = description;
-  //   }
-  //   if (price) {
-  //     updatedProduct.price = price;
-  //   }
+  async updateProduct(
+    productId: string,
+    title: string,
+    description: string,
+    price: number,
+  ) {
+    const updatedProduct = await this.findProduct(productId);
+    if (title) {
+      updatedProduct.title = title;
+    }
+    if (description) {
+      updatedProduct.description = description;
+    }
+    if (price) {
+      updatedProduct.price = price;
+    }
 
-  //   this.products[index] = updatedProduct;
-  // }
+    updatedProduct.save();
+  }
 
   deleteProduct(productId: string) {
     const index = this.findProduct(productId)[1];
@@ -68,11 +72,6 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException('Could not find product');
     }
-    return {
-      id: product.id,
-      title: product.title,
-      description: product.description,
-      price: product.price,
-    };
+    return product;
   }
 }
