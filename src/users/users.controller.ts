@@ -26,4 +26,15 @@ export class UsersController {
     );
     return { id: generatedId };
   }
+
+  @Get()
+  async getAllUsers() {
+    const users = await this.usersService.getUsers();
+    return users.map(user => ({
+      id: user.id,
+      userName: user.userName,
+      email: user.email,
+      password: user.password,
+    }));
+  }
 }

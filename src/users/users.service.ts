@@ -29,10 +29,6 @@ export class UsersService {
     ];
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
-  }
-
   async insertUser(userName: string, email: string, password: string) {
     const newUser = new this.userModel({
       userName: userName,
@@ -41,5 +37,15 @@ export class UsersService {
     });
     const result = await newUser.save();
     return result.id as string;
+  }
+
+  async getUsers() {
+    const users = await this.userModel.find().exec();
+    return users as User[];
+  }
+
+  // OLD FUNCTION FOR FINDING USERS FROM HARDCODED ARRAY
+  async findOne(username: string): Promise<User | undefined> {
+    return this.users.find(user => user.username === username);
   }
 }
