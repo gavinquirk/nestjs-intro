@@ -34,7 +34,11 @@ export class UsersController {
       id: user.id,
       userName: user.userName,
       email: user.email,
-      password: user.password,
     }));
+  }
+
+  @Get(':id')
+  getUser(@Param('id') userId: string) {
+    return this.usersService.getSingleUser(userId);
   }
 }
