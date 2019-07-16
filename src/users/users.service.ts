@@ -65,6 +65,13 @@ export class UsersService {
     updatedUser.save();
   }
 
+  async deleteUser(userId: string) {
+    const result = await this.userModel.deleteOne({ _id: userId }).exec();
+    if (result.n === 0) {
+      throw new NotFoundException('Could not find product');
+    }
+  }
+
   // Helper function for finding a user
   private async findUser(id: string): Promise<User> {
     let user: User;

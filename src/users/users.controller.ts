@@ -51,4 +51,10 @@ export class UsersController {
     await this.usersService.updateUser(userId, userName, email);
     return null;
   }
+
+  @Delete(':id')
+  async removeUser(@Param('id') userId: string) {
+    await this.usersService.deleteUser(userId);
+    return null;
+  }
 }
