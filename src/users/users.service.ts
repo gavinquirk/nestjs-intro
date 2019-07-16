@@ -6,28 +6,7 @@ import { User } from './user.model';
 
 @Injectable()
 export class UsersService {
-  // TODO: Remove hardcoded users array, configure for use with db
-  private readonly users: any;
-
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {
-    this.users = [
-      {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
-      },
-      {
-        userId: 2,
-        username: 'chris',
-        password: 'secret',
-      },
-      {
-        userId: 3,
-        username: 'maria',
-        password: 'guess',
-      },
-    ];
-  }
+  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
 
   async insertUser(userName: string, email: string, password: string) {
     const newUser = new this.userModel({
@@ -72,7 +51,7 @@ export class UsersService {
     }
   }
 
-  // Helper function for finding a user
+  // Helper method for finding a user by id
   private async findUser(id: string): Promise<User> {
     let user: User;
     try {
@@ -86,8 +65,8 @@ export class UsersService {
     return user;
   }
 
-  // OLD FUNCTION FOR FINDING USERS FROM HARDCODED ARRAY
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+  // Helper Method for finding a user by username
+  async findUserByUsername(userName: string): Promise<User> {
+    return this.userModel.findOne({ userName });
   }
 }
