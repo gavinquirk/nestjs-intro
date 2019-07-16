@@ -53,6 +53,18 @@ export class UsersService {
     };
   }
 
+  async updateUser(userId: string, userName: string, email: string) {
+    const updatedUser = await this.findUser(userId);
+    if (userName) {
+      updatedUser.userName = userName;
+    }
+    if (email) {
+      updatedUser.email = email;
+    }
+
+    updatedUser.save();
+  }
+
   // Helper function for finding a user
   private async findUser(id: string): Promise<User> {
     let user: User;

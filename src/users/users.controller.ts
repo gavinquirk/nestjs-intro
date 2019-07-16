@@ -41,4 +41,14 @@ export class UsersController {
   getUser(@Param('id') userId: string) {
     return this.usersService.getSingleUser(userId);
   }
+
+  @Patch(':id')
+  async updateUser(
+    @Param('id') userId: string,
+    @Body('userName') userName: string,
+    @Body('email') email: string,
+  ) {
+    await this.usersService.updateUser(userId, userName, email);
+    return null;
+  }
 }
