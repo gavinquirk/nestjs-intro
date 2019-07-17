@@ -19,11 +19,11 @@ export class UsersController {
     @Body('email') email: string,
     @Body('password') password: string,
   ) {
-    const generatedId = await this.usersService.insertUser(
-      userName,
-      email,
-      password,
-    );
+    const generatedId = await this.usersService
+      .insertUser(userName, email, password)
+      .then(function(res) {
+        return res;
+      });
     return { id: generatedId };
   }
 
