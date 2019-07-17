@@ -93,7 +93,7 @@ export class UsersService {
   }
 
   // Compare hash
-  private async compareHash(
+  async compareHash(
     password: string | undefined,
     hash: string | undefined,
   ): Promise<boolean> {

@@ -10,9 +10,13 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    // TODO: Handle hashed passwords
+    // Get user by username
     const user = await this.usersService.findUserByUsername(username);
-    if (user && user.password === pass) {
+
+    // Compare passwords
+    const passMatch = await this.usersService.compareHash(pass, user.password);
+
+    if (user && passMatch) {
       const { password, ...result } = user;
       return result;
     }
